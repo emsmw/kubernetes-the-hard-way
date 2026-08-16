@@ -2,8 +2,6 @@
 
 This guide walks you through setting up the required virtual machine infrastructure on a **Bare Metal / Linux Host (Debian/Ubuntu)** using **KVM**, **Libvirt**, and **Vagrant**.
 
----
-
 ## Prerequisites
 
 Ensure your host system meets the following requirements:
@@ -11,7 +9,7 @@ Ensure your host system meets the following requirements:
 * **OS:** Debian 11/12 or Ubuntu 20.04/22.04/24.04
 * **Hardware:** Minimum 8GB RAM, 4 CPU cores, and Virtualization enabled in BIOS/UEFI (VT-x / AMD-V)
 
----
+
 
 ## Step 1: Install KVM, Libvirt, and Vagrant
 
@@ -36,7 +34,7 @@ Ensure your host system meets the following requirements:
    vagrant plugin install vagrant-libvirt
    ```
 
----
+
 
 ## Step 2: Configure System Settings
 
@@ -55,7 +53,7 @@ Ensure your host system meets the following requirements:
    sudo systemctl restart libvirtd
    ```
 
----
+
 
 ## Step 3: Configure the Vagrantfile
 
@@ -65,7 +63,7 @@ Ensure your `vagrant/Vagrantfile` uses a base box that supports the `libvirt` pr
 config.vm.box = "generic/ubuntu2204"
 ```
 
----
+
 
 ## Step 4: Spin Up the Infrastructure
 
@@ -84,7 +82,7 @@ This will launch 5 virtual machines:
 * `node01`
 * `node02`
 
----
+
 
 ## Step 5: Verify the Cluster State
 
