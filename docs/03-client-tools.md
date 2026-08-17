@@ -25,18 +25,14 @@ cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
 ```
 
 Copy the key to the other hosts. You will be asked to enter a password for each of the `ssh-copy-id` commands. The password is:
-* VirtualBox - `vagrant`
+* VirtualBox/Linux - `vagrant`
 * Apple Silicon: `ubuntu`
 
-The option `-o StrictHostKeyChecking=no` tells it not to ask if you want to connect to a previously unknown host. Not best practice in the real world, but speeds things up here.
-
-`$(whoami)` selects the appropriate user name to connect to the remote VMs. On VirtualBox this evaluates to `vagrant`; on Apple Silicon it is `ubuntu`.
-
 ```bash
-ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@controlplane02
-ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@loadbalancer
-ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@node01
-ssh-copy-id -o StrictHostKeyChecking=no $(whoami)@node02
+ssh-copy-id vagrant@controlplane02
+ssh-copy-id vagrant@loadbalancer
+ssh-copy-id vagrant@node01
+ssh-copy-id vagrant@node02
 ```
 
 
