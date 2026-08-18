@@ -16,6 +16,23 @@ The commands in this lab must be run on each controller instance: `controlplane0
 
 ### Download and Install the etcd Binaries
 
+Check ARCH
+```bash
+uname -m
+```
+
+If it says x86_64, set:
+
+```bash
+ARCH="amd64"
+```
+
+If it says aarch64, set:
+
+```bash
+ARCH="arm64"
+```
+
 Download the official etcd release binaries from the [etcd](https://github.com/etcd-io/etcd) GitHub project:
 
 [//]: # (host:controlplane01-controlplane02)
@@ -23,22 +40,25 @@ Download the official etcd release binaries from the [etcd](https://github.com/e
 
 ```bash
 ETCD_VERSION="v3.5.9"
+ARCH="amd64"   # or arm64, based on uname -m
 wget -q --show-progress --https-only --timestamping \
-  "https://github.com/coreos/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${ARCH}.tar.gz"
+  "https://github.com/etcd-io/etcd/releases/download/${ETCD_VERSION}/etcd-${ETCD_VERSION}-linux-${ARCH}.tar.gz"
 ```
 
 Extract and install the `etcd` server and the `etcdctl` command line utility:
 
 ```bash
 {
-  tar -xvf etcd-${ETCD_VERSION}-linux-${ARCH}.tar.gz
-  sudo mv etcd-${ETCD_VERSION}-linux-${ARCH}/etcd* /usr/local/bin/
+  mkdir -p etcd-download-test
+  tar xzf etcd-${ETCD_VERSION}-linux-${ARCH}.tar.gz -C etcd-download-test --strip-components=1
+  sudo cp etcd-download-test/etcd etcd-download-test/etcdctl /usr/local/bin/
+  sudo chmod +x /usr/local/bin/etcd /usr/local/bin/etcdctl
 }
 ```
 
 ### Configure the etcd Server
 
-Copy and secure certificates. Note that we place `ca.crt` in our main PKI directory and link it from etcd to not have multiple copies of the cert lying around.
+Copy and secure certificates in controlplane01. Note that we place `ca.crt` in our main PKI directory and link it from etcd to not have multiple copies of the cert lying around.
 
 ```bash
 {
